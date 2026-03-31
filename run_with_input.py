@@ -48,6 +48,12 @@ def main():
     print("----------------------------------")
     print(f"Latency : {result['latency']:.6f} seconds")
 
+print("\n📦 SERVICES CONFIGURATION")
+print("----------------------------------")
+
+for s in user_input["services"]:
+    print(f"Service: {s['name']} | Image: {s['image']} | Port: {s['port']} | Replicas: {s['replicas']} | Exposure: {s['exposure']}")
+
 
 if __name__ == "__main__":
     main()
