@@ -1,5 +1,7 @@
-import os
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 from datetime import datetime
+import os
 
 
 def generate_certificate(result):
@@ -7,32 +9,29 @@ def generate_certificate(result):
     os.makedirs("certificates", exist_ok=True)
 
     app_name = result['after']['name']
-    filename = f"certificates/cert_{app_name}.txt"
+    filename = f"certificates/cert_{app_name}.pdf"
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    content = f"""
-========================================
-   KUBERNETES SECURITY CERTIFICATE
-========================================
+    c = canvas.Canvas(filename, pagesize=letter)
 
-Application Name : {app_name}
-Status           : {'SECURE' if result['verified'] else 'UNSAFE'}
+    # Title
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(150, 750, "KUBERNETES SECURITY CERTIFICATE")
 
-Violations Found : {result['violation']}
-Repairs Applied  : {result['repairs']}
+    # Content
+    c.setFont("Helvetica", 12)
 
-Certificate Hash : {result['certificate']}
+    c.drawString(100, 700, f"Application Name : {app_name}")
+    c.drawString(100, 680, f"Status           : {'SECURE' if result['verified'] else 'UNSAFE'}")
+    c.drawString(100, 660, f"Violations Found : {result['violation']}")
+    c.drawString(100, 640, f"Repairs Applied  : {result['repairs']}")
+    c.drawString(100, 620, f"Certificate Hash : {result['certificate']}")
+    c.drawString(100, 600, f"Generated At     : {now}")
 
-Generated At     : {now}
+    c.drawString(100, 560, "Certified by Neuro-Symbolic Engine")
 
-========================================
-Certified by Neuro-Symbolic Engine
-========================================
-"""
-
-    with open(filename, "w") as f:
-        f.write(content)
+    c.save()
 
     print(f"\n📄 Certificate saved: {filename}")
 
