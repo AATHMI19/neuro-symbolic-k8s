@@ -10,6 +10,7 @@ def run(manifest=None, verbose=False):
         }
 
     original_manifest = manifest.copy()
+    services = manifest.get("services", [])
 
     if verbose:
         print("Neuro-Symbolic Pipeline")
