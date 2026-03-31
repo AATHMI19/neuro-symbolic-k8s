@@ -1,0 +1,17 @@
+{
+  "step": "03_success_case_clean_manifest",
+  "scenario": "Direct success path",
+  "manifest_name": "payments-compliant",
+  "violations": [],
+  "risk_score": 0,
+  "decision": "PASS",
+  "deployment_allowed": true,
+  "message": "DEPLOYMENT ALLOWED for payments-compliant | score=0 | decision=PASS",
+  "certificate": {
+    "scenario": "Already compliant success path",
+    "status": "PASS",
+    "manifest_hash": "385046a87cb3ff01ef1d20e4f8dc05f4722337393e685bfbab9d5aa49da7bc52",
+    "certificate_id": "385046a87cb3ff01",
+    "generated_at": "2026-03-23T16:11:05.479074Z"
+  }
+}

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-4
+spec:
+  containers:
+  - image: node
+    name: app
+    securityContext:
+      runAsNonRoot: false

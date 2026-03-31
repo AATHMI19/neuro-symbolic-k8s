@@ -1,0 +1,31 @@
+{
+  "step": "01_failure_case_without_repair",
+  "scenario": "Failure path",
+  "manifest_name": "frontend-risky",
+  "violations": [
+    {
+      "rule": "RunAsNonRoot",
+      "severity": "critical",
+      "message": "Container can run as root."
+    },
+    {
+      "rule": "AllowPrivilegeEscalation",
+      "severity": "high",
+      "message": "Privilege escalation is enabled."
+    },
+    {
+      "rule": "ReadOnlyRootFilesystem",
+      "severity": "medium",
+      "message": "Root filesystem is writable."
+    },
+    {
+      "rule": "PinnedImageTag",
+      "severity": "medium",
+      "message": "Image tag is not pinned to an immutable version."
+    }
+  ],
+  "risk_score": 100,
+  "decision": "BLOCK",
+  "deployment_allowed": false,
+  "message": "DEPLOYMENT BLOCKED for frontend-risky | score=100 | decision=BLOCK"
+}

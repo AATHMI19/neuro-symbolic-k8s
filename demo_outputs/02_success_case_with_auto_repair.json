@@ -1,0 +1,25 @@
+{
+  "step": "02_success_case_with_auto_repair",
+  "scenario": "Success path after repair",
+  "manifest_name": "frontend-risky",
+  "before_count": 4,
+  "after_count": 0,
+  "repair_actions": [
+    "Set runAsNonRoot=True",
+    "Set allowPrivilegeEscalation=False",
+    "Set readOnlyRootFilesystem=True",
+    "Pin image tag to nginx:1.25.3"
+  ],
+  "risk_before": 100,
+  "risk_after": 0,
+  "decision_after": "PASS",
+  "deployment_allowed": true,
+  "message": "DEPLOYMENT ALLOWED for frontend-risky | score=0 | decision=PASS",
+  "certificate": {
+    "scenario": "Auto-repaired success path",
+    "status": "PASS",
+    "manifest_hash": "387493b33e38ef25d602dba1931f48321a974235230b09fabc330f6453c47036",
+    "certificate_id": "387493b33e38ef25",
+    "generated_at": "2026-03-23T16:11:05.477699Z"
+  }
+}
