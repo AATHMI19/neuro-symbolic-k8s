@@ -1,7 +1,7 @@
 from input_handler import get_user_input
 from config_adapter import adapt_to_existing_format
 from experiments.proposed.neuro_symbolic_pipeline import run
-
+from k8s_generator import generate_k8s_yaml, save_yaml
 
 def main():
     # Step 1: Input
@@ -48,12 +48,14 @@ def main():
     print("----------------------------------")
     print(f"Latency : {result['latency']:.6f} seconds")
 
-print("\n📦 SERVICES CONFIGURATION")
-print("----------------------------------")
+    print("\n📦 SERVICES CONFIGURATION")
+    print("----------------------------------")
 
-for s in user_input["services"]:
-    print(f"Service: {s['name']} | Image: {s['image']} | Port: {s['port']} | Replicas: {s['replicas']} | Exposure: {s['exposure']}")
+    for s in user_input["services"]:
+        print(f"Service: {s['name']} | Image: {s['image']} | Port: {s['port']} | Replicas: {s['replicas']} | Exposure: {s['exposure']}")
 
+    k8s_objects = generate_k8s_yaml(user_input)
+    save_yaml(k8s_objects)
 
 if __name__ == "__main__":
     main()
