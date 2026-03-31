@@ -4,7 +4,6 @@ from datetime import datetime
 
 def generate_certificate(result):
 
-    # Ensure folder exists
     os.makedirs("certificates", exist_ok=True)
 
     app_name = result['after']['name']
