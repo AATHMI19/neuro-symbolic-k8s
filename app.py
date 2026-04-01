@@ -1,4 +1,4 @@
-from flask import Flask, send_file, redirect, url_for
+from flask import Flask, send_file, render_template_string
 import os
 
 app = Flask(__name__)
@@ -6,52 +6,55 @@ app = Flask(__name__)
 CERT_FOLDER = "certificates"
 
 
-def get_latest_certificate():
-    files = [f for f in os.listdir(CERT_FOLDER) if f.endswith(".pdf")]
-    if not files:
-        return None
+# 🔹 UI Template
+HTML_TEMPLATE = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Certificate Dashboard</title>
+</head>
+<body>
+    <h2>✅ Certificate Dashboard</h2>
+    <hr>
 
-    files.sort(reverse=True)
-    return files[0]
+    {% if files %}
+        <ul>
+        {% for file in files %}
+            <li>
+                📄 {{ file }}
+                <a href="/view/{{ file }}" target="_blank">[View]</a>
+                <a href="/download/{{ file }}">[Download]</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No certificates found</p>
+    {% endif %}
+</body>
+</html>
+"""
 
 
+# 🔹 Home → Dashboard
 @app.route('/')
 def home():
-    # Redirect directly to latest certificate
-    return redirect(url_for('view_certificate'))
+    files = [f for f in os.listdir(CERT_FOLDER) if f.endswith(".pdf")]
+    files.sort(reverse=True)
+    return render_template_string(HTML_TEMPLATE, files=files)
 
 
-@app.route('/cert')
-def view_certificate():
-    filename = get_latest_certificate()
-
-    if not filename:
-        return "No certificate found"
-
+# 🔹 View PDF
+@app.route('/view/<filename>')
+def view_file(filename):
     file_path = os.path.join(CERT_FOLDER, filename)
     return send_file(file_path)
 
 
-@app.route('/download')
-def download_latest():
-    filename = get_latest_certificate()
-
-    if not filename:
-        return {"error": "No certificate found"}, 404
-
-    file_path = os.path.join(CERT_FOLDER, filename)
-    return send_file(file_path, as_attachment=True)
-
-
-# (Keep your existing route also if needed)
+# 🔹 Download PDF
 @app.route('/download/<filename>')
 def download_file(filename):
     file_path = os.path.join(CERT_FOLDER, filename)
-
-    if os.path.exists(file_path):
-        return send_file(file_path, as_attachment=True)
-    else:
-        return {"error": "File not found"}, 404
+    return send_file(file_path, as_attachment=True)
 
 
 if __name__ == '__main__':
