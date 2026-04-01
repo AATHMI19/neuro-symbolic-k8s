@@ -1,11 +1,16 @@
 def adapt_to_existing_format(user_config):
 
-    services = user_config["services"]
-
     manifest = {
         "name": user_config["application"],
+        "services": user_config["services"],
+
+        # 🔹 Default policies (if not provided)
         "runAsNonRoot": False,
-        "services": services   # ✅ ADD THIS
+        "privileged": False,
+        "readOnlyRootFilesystem": False,
+        "allowPrivilegeEscalation": True,
+        "resources": None,
+        "imagePullPolicy": None
     }
 
     return manifest
