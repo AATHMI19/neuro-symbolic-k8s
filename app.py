@@ -1,6 +1,5 @@
 from flask import Flask, send_file, render_template_string
 import os
-
 app = Flask(__name__)
 
 CERT_FOLDER = "certificates"
