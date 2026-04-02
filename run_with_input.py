@@ -5,10 +5,7 @@ from k8s_generator import generate_k8s_yaml, save_yaml
 from certificate_generator import generate_certificate
 
 def main():
-    # Step 1: Input
     user_input = get_user_input()
-
-    # Step 2: Adapt config
     config = adapt_to_existing_format(user_input)
 
     print("\n🔹 INPUT CONFIGURATION")
