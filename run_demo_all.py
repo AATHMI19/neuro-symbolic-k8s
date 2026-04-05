@@ -1,6 +1,11 @@
 import importlib.util
 from pathlib import Path
-from certificate import generate_certificate
+from src.certificate import generate_certificate
+
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 
 DEMO_DIR = Path(__file__).resolve().parent / 'demo'
 FILES = [
